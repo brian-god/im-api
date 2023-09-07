@@ -10,11 +10,12 @@ ifeq ($(GOHOSTOS), windows)
 	Git_Bash=$(subst \,/,$(subst cmd\,bin\bash.exe,$(dir $(shell where git))))
 	INTERNAL_PROTO_FILES=$(shell $(Git_Bash) -c "find internal -name *.proto")
 	API_PROTO_FILES=$(shell $(Git_Bash) -c "find api -name *.proto")
+	ERROR_PROTO_FILES=$(shell $(Git_Bash) -c "find api -name *_error.proto")
 else
 	INTERNAL_PROTO_FILES=$(shell find internal -name *.proto)
 	API_PROTO_FILES=$(shell find api -name *.proto)
+	ERROR_PROTO_FILES=$(shell find . api -name *_error.proto)
 endif
-
 
 .PHONY: api
 # generate api proto
@@ -25,6 +26,19 @@ api:
  	       --go-http_out=paths=source_relative:./api \
  	       --go-grpc_out=paths=source_relative:./api \
 	       $(API_PROTO_FILES)
+.PHONY: errors
+# generate errors proto
+errors:
+	protoc --proto_path=. \
+             --proto_path=./third_party \
+             --go_out=paths=source_relative:. \
+             --go-errors_out=paths=source_relative:. \
+             $(ERROR_PROTO_FILES)
+.PHONY: all
+# generate all
+all:
+	make api;
+	make errors;
 # show help
 help:
 	@echo ''
