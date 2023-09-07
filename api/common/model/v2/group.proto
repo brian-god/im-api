@@ -8,7 +8,7 @@ option java_package = "api.common.model.v2";
 
 // 群列表项
 message GroupItem {
-	string id =1; // 用户id
+	string groupID =1; // 用户id
 	string nickName =2; // 昵称
 	string faceURL =3; // 头像
 }
