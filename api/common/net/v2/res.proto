@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package api.common.model.v2;
+
+option go_package = "github.com/brian-god/xy-apis/api/common/net/v2;v2";
+option java_multiple_files = true;
+option java_package = "api.common.net.v2";
+// 好友列表项
+message Result {
+	int32 code =1; // 编码
+	string msg =2; // 消息
+	string errMsg =3; // 错误详情
+	string reason =4; // 错误原因
+	bytes data =5; //返回数据
+}
