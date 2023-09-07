@@ -11,14 +11,3 @@ message FriendItem {
 	string nickName =2; // 昵称
 	string faceURL =3; // 头像
 }
-
-// CreateFriendRequest
-message FriendListReq {
-	string userID=1; // 用户id
-	map<string,int64> changTime =2;//好友信息更新时间列表
-}
-
-// FriendListReply
-message FriendListReply {
-	repeated FriendItem items=1; // 好友列表
-}

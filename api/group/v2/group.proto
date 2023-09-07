@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package api.group.v2;
+
+option go_package = "github.com/brian-god/xy-apis/api/group/v2;v2";
+option java_multiple_files = true;
+option java_package = "api.group.v2";
+import "common/model/v2/group.proto";
+service Group {
+	rpc GetJoinGroupList (JoinGroupListReq) returns (JoinGroupListReply);
+}
+
+
+// 加入群组列表请求
+message JoinGroupListReq {
+	string userID=1; // 用户id
+	map<string,int64> changTime =2;//群信息更新时间列表
+}
+
+// 加入群组列表返回
+message JoinGroupListReply {
+	repeated api.common.model.v2.GroupItem items=1; // 群列表
+}

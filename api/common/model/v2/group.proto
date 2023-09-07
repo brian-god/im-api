@@ -12,14 +12,3 @@ message GroupItem {
 	string nickName =2; // 昵称
 	string faceURL =3; // 头像
 }
-
-// 加入群组列表请求
-message JoinGroupListReq {
-	string userID=1; // 用户id
-	map<string,int64> changTime =2;//群信息更新时间列表
-}
-
-// 加入群组列表返回
-message JoinGroupListReply {
-	repeated GroupItem items=1; // 群列表
-}

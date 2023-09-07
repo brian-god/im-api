@@ -5,4 +5,20 @@ package api.friend.v2;
 option go_package = "github.com/brian-god/xy-apis/api/friend/v2;v2";
 option java_multiple_files = true;
 option java_package = "api.friend.v2";
+import "common/model/v2/friend.proto";
 
+service Friend {
+  //获取好友的请求参数
+  rpc GetFriendList (FriendListReq) returns (FriendListReply);
+}
+
+// CreateFriendRequest
+message FriendListReq {
+  string userID=1; // 用户id
+  map<string,int64> changTime =2;//好友信息更新时间列表
+}
+
+// FriendListReply
+message FriendListReply {
+  repeated api.common.model.v2.FriendItem items=1; // 好友列表
+}
