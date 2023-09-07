@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package api.common.model.v2;
+
+option go_package = "github.com/brian-god/xy-apis/api/common/model/v2;v2";
+option java_multiple_files = true;
+option java_package = "api.common.model.v2";
+// 好友列表项
+message FriendItem {
+	string id =1; // 用户id
+	string nickName =2; // 昵称
+	string faceURL =3; // 头像
+}
+
+// CreateFriendRequest
+message FriendListReq {
+	string userID=1; // 用户id
+	map<string,int64> changTime =2;//好友信息更新时间列表
+}
+
+// FriendListReply
+message FriendListReply {
+	repeated FriendItem items=1; // 好友列表
+}
