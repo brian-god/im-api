@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package api.friend.v1;
+import "errors/errors.proto";
+
+option go_package = "github.com/brian-god/xy-apis/api/friend/v2;v2";
+option java_multiple_files = true;
+option java_package = "api.friend.v2";
+
+enum FriendErrorReason {
+  // 设置缺省错误码
+  option (errors.default_code) = 500;
+
+  // 获取好友信息失败
+  GET_FRIEND_LIST_FAIL = 0 [(errors.code) = 410];
+}
