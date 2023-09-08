@@ -12,5 +12,27 @@ enum FriendErrorReason {
   option (errors.default_code) = 500;
 
   // 获取好友信息失败
-  GET_FRIEND_LIST_FAIL = 0 [(errors.code) = 410];
+  GetFriendList_FAIL = 0 [(errors.code) = 410];
+  // 获取好友信息失败
+  GetFriendsInfo_FAIL = 1 [(errors.code) = 410];
+  // 添加好友失败
+  AddFriend_FAIL = 2 [(errors.code) = 410];
+  // 获取好友申请列表
+  GetFriendApplyList_FAIL = 3 [(errors.code) = 410];
+  // 添加黑名单
+  AddBlacklist_FAIL = 4 [(errors.code) = 410];
+  // 删除黑名单
+  RemoveBlacklist_FAIL = 5 [(errors.code) = 410];
+  // 是否好友
+  IsFriend_FAIL = 6 [(errors.code) = 410];
+  // 是否黑名单
+  IsInBlackList_FAIL = 7 [(errors.code) = 410];
+  // 获取黑名单列表
+  GetBlacklist_FAIL = 8 [(errors.code) = 410];
+  // 删除好友
+  DeleteFriend_FAIL = 9 [(errors.code) = 410];
+  // 删除好友
+  AddFriendResponse_FAIL = 10 [(errors.code) = 410];
+  // 删除好友
+  SetFriendRemark_FAIL = 11 [(errors.code) = 410];
 }
