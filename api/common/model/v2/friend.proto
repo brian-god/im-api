@@ -15,19 +15,20 @@ message FriendItem {
 // 好友信息
 message FriendInfo{
 	string ownerUserID = 1; // 用户 id
-	string faceURL = 2; // 头像
-	string nickname = 3; // 昵称
-	string phone = 4; //  电话
-	string code = 5; // 码
-	int32 gender = 6; // 性别 1：女 2：男
-	string message = 7; // 简介
+	string friendUserID = 2; // 好友 id
+	string faceURL = 3; // 头像
+	string nickname = 4; // 昵称
+	string phone = 5; //  电话
+	string code = 6; // 码
+	int32 gender = 7; // 性别 1：女 2：男
+	string message = 8; // 简介
 	string shareCode = 9; // 分享码
-	int64 createdAt = 11; // 创建时间
-	int64 updatedAt = 12; // 更新时间
-	string email = 13; // 邮箱
-	int64 birth = 14; // 生日
-	int32 addSource = 15; //添加来源
-	string ex = 16; //扩展字段
+	int64 createdAt = 10; // 创建时间
+	int64 updatedAt = 11; // 更新时间
+	string email = 12; // 邮箱
+	int64 birth = 13; // 生日
+	int32 addSource = 14; //添加来源
+	string ex = 15; //扩展字段
 }
 
 // 好友请求信息
