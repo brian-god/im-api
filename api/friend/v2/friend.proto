@@ -56,7 +56,7 @@ message GetFriendsInfoReq{
   repeated string FriendUserIDs = 2; //好友id
 }
 message GetFriendInfoReply{
-  repeated api.common.model.v2.FriendInfo FriendInfoList = 1;
+  repeated api.common.model.v2.FriendInfo list = 1;
 }
 
 /*
