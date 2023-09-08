@@ -1,11 +1,11 @@
 syntax = "proto3";
 
-package api.friend.v1;
+package api.common.err;
 import "errors/errors.proto";
 
-option go_package = "github.com/brian-god/xy-apis/api/friend/v2;v2";
+option go_package = "github.com/brian-god/xy-apis/api/common/err;err";
 option java_multiple_files = true;
-option java_package = "api.friend.v2";
+option java_package = "api.common.err";
 
 enum CommonErrorReason {
   // 设置缺省错误码
