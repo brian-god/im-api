@@ -6,19 +6,184 @@ option go_package = "github.com/brian-god/xy-apis/api/friend/v2;v2";
 option java_multiple_files = true;
 option java_package = "api.friend.v2";
 import "common/model/v2/friend.proto";
+import "common/model/common.proto";
 
 service Friend {
-  //获取好友的请求参数
+  //获取好友列表仅仅返回id昵称和头像
   rpc GetFriendList (FriendListReq) returns (FriendListReply);
+  // 获取好友信息
+  rpc GetFriendsInfo(GetFriendsInfoReq) returns(GetFriendInfoReply);
+  // 添加好友
+  rpc AddFriend(AddFriendReq) returns(AddFriendReply);
+  // 获取好友申请列表
+  rpc GetFriendApplyList(GetFriendApplyListReq) returns(GetFriendApplyListReply);
+  // 添加黑名单
+  rpc AddBlacklist(AddBlacklistReq) returns(AddBlacklistReply);
+  // 删除黑名单
+  rpc RemoveBlacklist(RemoveBlacklistReq) returns(RemoveBlacklistReply);
+  // 是否好友
+  rpc IsFriend(IsFriendReq) returns(IsFriendReply);
+  // 是否黑名单
+  rpc IsInBlackList(IsInBlackListReq) returns(IsInBlackListReply);
+  // 获取黑名单列表
+  rpc GetBlacklist(GetBlacklistReq) returns(GetBlacklistReply);
+  // 删除好友
+  rpc DeleteFriend(DeleteFriendReq) returns(DeleteFriendReply);
+  // 处理好友请求
+  rpc AddFriendResponse(AddFriendResponseReq) returns(AddFriendResponseReply);
+  // 设置好友备注
+  rpc SetFriendRemark(SetFriendRemarkReq) returns(SetFriendRemarkReply);
 }
 
-// CreateFriendRequest
+/*
+    获取好友列表仅仅返回id昵称和头像
+    -------------------------------------------
+ */
 message FriendListReq {
   string userID=1; // 用户id
   map<string,int64> changTime =2;//好友信息更新时间列表
 }
 
-// FriendListReply
 message FriendListReply {
   repeated api.common.model.v2.FriendItem items=1; // 好友列表
 }
+/*
+    获取好友信息
+    -------------------------------------------
+ */
+message GetFriendsInfoReq{
+  string userId = 1; //用户ID
+  repeated string FriendUserIDs = 2; //好友id
+}
+message GetFriendInfoReply{
+  repeated api.common.model.v2.FriendInfo FriendInfoList = 1;
+}
+
+/*
+    添加好友
+    -------------------------------------------
+ */
+message AddFriendReq{
+  string opUserID = 1; //操作用户ID
+  string toUserID = 2; //被添加id‘
+  string fromUserID = 3; //来源id
+  string reqMsg = 4; //请求消息
+  string remake = 5; //请求消息
+}
+message AddFriendReply{
+}
+
+
+/*
+    获取好友申请列表
+    -------------------------------------------
+ */
+message GetFriendApplyListReq{
+  string userID = 1; //用户id
+  api.common.model.Pagination pagination = 2; //分页数据
+}
+message GetFriendApplyListReply{
+  int64  Total = 1; // 总数
+  repeated api.common.model.v2.FriendRequest list = 2; //列表数据
+}
+
+
+/*
+    添加黑名单
+    -------------------------------------------
+ */
+message AddBlacklistReq{
+  string opUserID = 1; //操作用户ID
+  string toUserID = 2; //被添加id‘
+  string fromUserID = 3; //来源id
+}
+message AddBlacklistReply{
+}
+/*
+    删除黑名单
+    -------------------------------------------
+ */
+message RemoveBlacklistReq{
+  string opUserID = 1; //操作用户ID
+  string toUserID = 2; //被添加id‘
+  string fromUserID = 3; //来源id
+}
+message RemoveBlacklistReply{
+}
+
+/*
+    是否好友
+    -------------------------------------------
+ */
+message IsFriendReq{
+  string opUserID = 1; //操作用户ID
+  string toUserID = 2; //被添加id‘
+  string fromUserID = 3; //来源id
+}
+message IsFriendReply{
+  bool    response = 3;
+}
+
+/*
+    是否黑名单
+    -------------------------------------------
+ */
+message IsInBlackListReq{
+  string opUserID = 1; //操作用户ID
+  string toUserID = 2; //被添加id‘
+  string fromUserID = 3; //来源id
+}
+message IsInBlackListReply{
+  bool    response = 3;
+}
+/*
+    获取黑名单列表
+    -------------------------------------------
+ */
+message GetBlacklistReq{
+  string opUserID = 1; //操作用户ID
+  string toUserID = 2; //被添加id‘
+  string fromUserID = 3; //来源id
+}
+message GetBlacklistReply{
+  repeated api.common.model.v2.PublicUserInfo list = 3;
+}
+/*
+    删除好友
+    -------------------------------------------
+ */
+message DeleteFriendReq{
+  string opUserID = 1; //操作用户ID
+  string toUserID = 2; //被添加id‘
+  string fromUserID = 3; //来源id
+}
+message DeleteFriendReply{
+}
+
+/*
+    处理好友请求
+    -------------------------------------------
+ */
+message AddFriendResponseReq{
+  string opUserID = 1; //操作用户ID
+  string toUserID = 2; //被添加id‘
+  string fromUserID = 3; //来源id
+  int32  handleResult = 4; // 处理
+  string handleMsg = 5; //处理消息
+}
+message AddFriendResponseReply{
+}
+/*
+    设置好友备注
+    -------------------------------------------
+ */
+message SetFriendRemarkReq{
+  string opUserID = 1; //操作用户ID
+  string toUserID = 2; //被添加id‘
+  string fromUserID = 3; //来源id
+  string remark = 4; //备注
+}
+message SetFriendRemarkReply{
+}
+
+

@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package api.common.model;
+
+option go_package = "github.com/brian-god/xy-apis/api/common/model;model";
+option java_multiple_files = true;
+option java_package = "api.common.model";
+
+// 分页
+message Pagination {
+	int32 page = 1;
+	int32 size = 2;
+}
