@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package api.common.model.v2;
 
+import "common/model/v2/friend.proto";
+
 option go_package = "github.com/brian-god/xy-apis/api/common/model/v2;v2";
 option java_multiple_files = true;
 option java_package = "api.common.model.v2";
@@ -11,4 +13,39 @@ message GroupItem {
 	string groupID =1; // 用户id
 	string nickName =2; // 昵称
 	string faceURL =3; // 头像
+}
+
+message GroupInfo{
+	string groupID = 1;
+	string groupName = 2;
+	string code = 3;
+	string notification = 4;
+	string introduction = 5;
+	string faceURL = 6;
+	string ownerUserID = 7;
+	uint32 createTime = 8;
+	uint32 memberCount = 9;
+	string ex = 10;
+	int32 status = 11;
+	string creatorUserID = 12;
+	int32 groupType = 13;
+	int32 needVerification = 14;
+	int32 lookMemberInfo =15;
+	int32 applyMemberFriend = 16;
+	uint32 notificationUpdateTime = 17;
+	string notificationUserID = 18;
+}
+
+message GroupRequest{
+	PublicUserInfo userInfo = 1;
+	GroupInfo groupInfo = 2;
+	int32 handleResult = 3;
+	string reqMsg = 4;
+	string  handleMsg = 5;
+	uint32 reqTime = 6;
+	string handleUserID = 7;
+	uint32 handleTime = 8;
+	string ex = 9;
+	int32 joinSource = 10;
+	string inviterUserID = 11;
 }
