@@ -2,7 +2,6 @@ syntax = "proto3";
 
 package api.group.v2;
 
-import "common/model/v2/friend.proto";
 import "common/model/v2/group.proto";
 import "google/protobuf/empty.proto";
 
@@ -12,7 +11,7 @@ option java_package = "api.group.v2";
 
 service Group {
 
-    rpc CreateGroup (CreateGroupReq) returns (google.protobuf.Empty); // 创建群聊
+    rpc CreateGroup (CreateGroupReq) returns (CreateGroupReply); // 创建群聊
     rpc SetGroupInfo (SetGroupInfoReq) returns (google.protobuf.Empty); // 设置群信息
     rpc JoinGroup (JoinGroupReq) returns (google.protobuf.Empty); // 加入群聊
     rpc QuitGroup (QuitGroupReq) returns (google.protobuf.Empty); // 退出群聊
@@ -23,27 +22,27 @@ service Group {
     rpc GetUserReqGroupApplicationList (GetUserReqGroupApplicationListReq) returns (GetGroupApplicationListReply); // 获取用户加群申请列表
     rpc GetGroupsInfo (GetGroupInfoReq) returns (GetGroupInfoReplay); // 通过群ID列表获取群信息
     rpc GetGroupInfoByCode (GetGroupInfoByCodeReq) returns (GetGroupInfoReplay); // 通过code获取群信息
-    rpc KickGroupMember (JoinGroupListReq) returns (JoinGroupListReply); // 把用户踢出群组
-    rpc GetGroupMemberList (JoinGroupListReq) returns (JoinGroupListReply); // 获取群组成员
-    rpc GetGroupAllMemberList (JoinGroupListReq) returns (JoinGroupListReply); // 获取全部群成员列表
-    rpc GetGroupMembersInfo (JoinGroupListReq) returns (JoinGroupListReply); // 获取群成员信息
-    rpc InviteUserToGroup (JoinGroupListReq) returns (JoinGroupListReply); // 将用户拉入群组
-    rpc GetJoinedGroupList (JoinGroupListReq) returns (JoinGroupListReply); // 获取用户加入群列表
-    rpc DismissGroup (JoinGroupListReq) returns (JoinGroupListReply); // 解散群组
-    rpc MuteGroupMember (JoinGroupListReq) returns (JoinGroupListReply); // 禁言群成员
-    rpc CancelMuteGroupMember (JoinGroupListReq) returns (JoinGroupListReply); // 取消禁言群成员
-    rpc MuteGroup (JoinGroupListReq) returns (JoinGroupListReply); // 禁言群组
-    rpc CancelMuteGroup (JoinGroupListReq) returns (JoinGroupListReply); // 取消禁言群组
-    rpc SetGroupMemberNickname (JoinGroupListReq) returns (JoinGroupListReply); // 设置群成员昵称
-    rpc SetGroupMemberInfo (JoinGroupListReq) returns (JoinGroupListReply); // 修改群成员信息
-    rpc GetGroupAbstractInfo (JoinGroupListReq) returns (JoinGroupListReply); // 获取群组摘要信息
+    rpc KickGroupMember (KickGroupMemberReq) returns (KickGroupMemberReply); // 把用户踢出群组
+    rpc GetGroupMemberList (GetGroupMemberListReq) returns (GetGroupMemberListReply); // 获取群组成员
+    rpc GetGroupAllMemberList (GetGroupAllMemberReq) returns (GetGroupAllMemberReply); // 获取全部群成员列表
+    rpc GetGroupMembersInfo (GetGroupMembersInfoReq) returns (GetGroupAllMemberReply); // 获取群成员信息
+    rpc InviteUserToGroup (InviteUserToGroupReq) returns (InviteUserToGroupReply); // 将用户拉入群组
+    rpc GetJoinedGroupList (GetJoinedGroupListReq) returns (GetJoinedGroupListReply); // 获取用户加入群列表
+    rpc DismissGroup (DismissGroupReq) returns (google.protobuf.Empty); // 解散群组
+    rpc MuteGroupMember (MuteGroupMemberReq) returns (google.protobuf.Empty); // 禁言群成员
+    rpc CancelMuteGroupMember (CancelMuteGroupMemberReq) returns (google.protobuf.Empty); // 取消禁言群成员
+    rpc MuteGroup (MuteGroupReq) returns (google.protobuf.Empty); // 禁言群组
+    rpc CancelMuteGroup (CancelMuteGroupReq) returns (google.protobuf.Empty); // 取消禁言群组
+    rpc SetGroupMemberNickname (SetGroupMemberNicknameReq) returns (google.protobuf.Empty); // 设置群成员昵称
+    rpc SetGroupMemberInfo (SetGroupMemberInfoReq) returns (google.protobuf.Empty); // 修改群成员信息
+    rpc GetGroupAbstractInfo (GetGroupAbstractInfoReq) returns (GetGroupAbstractInfoReply); // 获取群组摘要信息
 
-    rpc GetJoinGroupList (JoinGroupListReq) returns (JoinGroupListReply);
+    //    rpc GetJoinGroupList (JoinGroupListReq) returns (JoinGroupListReply);
 }
 
 message GroupAddMemberInfo {
     string userID = 1;
-    string roleLevel = 2;
+    int32 roleLevel = 2;
 }
 
 message CreateGroupReq {
@@ -59,6 +58,10 @@ message CreateGroupReq {
     string groupID = 10;
 }
 
+message CreateGroupReply {
+    common.model.v2.GroupInfo data = 1;
+}
+
 message SetGroupInfoReq {
     string groupID = 1;
     string groupName = 2;
@@ -72,7 +75,7 @@ message SetGroupInfoReq {
     int32 applyMemberFriend = 10;
 }
 
-message JoinGroupReq{
+message JoinGroupReq {
     string groupID = 1;
     string reqMessage = 2;
     string operationID = 3;
@@ -80,68 +83,192 @@ message JoinGroupReq{
     string jinviterUserID = 5;
 }
 
-message QuitGroupReq{
+message QuitGroupReq {
     string groupID = 1;
     string operationID = 2;
+    string OpUserID = 3;
 }
 
-message ApplicationGroupResponseReq{
+message ApplicationGroupResponseReq {
     string groupID = 1;
     string operationID = 2;
     string fromUserID = 3;
     string handledMsg = 4;
-    string handleResult = 5;
+    int32 handleResult = 5;
+    string OpUserID = 6;
 }
 
-message TransferGroupOwnerReq{
+message TransferGroupOwnerReq {
     string groupID = 1;
     string oldOwnerUserID = 2;
     string newOwnerUserID = 3;
     string operationID = 4;
+    string OpUserID = 5;
 }
 
-message GetGroupApplicationListReq{
+message GetGroupApplicationListReq {
     string operationID = 1;
     string fromUserID = 2;
+    string OpUserID = 3;
 }
 
-message GetGroupApplicationListReply{
+message GetGroupApplicationListReply {
     repeated common.model.v2.GroupRequest data = 1;
 }
 
-message GetGroupApplicationByUserAndGroupReq{
+message GetGroupApplicationByUserAndGroupReq {
     string groupID = 1;
     string userID = 2;
     string operationID = 3;
 }
 
-message GetUserReqGroupApplicationListReq{
+message GetUserReqGroupApplicationListReq {
     string userID = 1;
     string operationID = 2;
+    string OpUserID = 3;
 }
 
-message GetGroupInfoReq{
+message GetGroupInfoReq {
     repeated string groupIDList = 1;
     string operationID = 2;
+    string OpUserID = 3;
 }
 
-message GetGroupInfoReplay{
+message GetGroupInfoReplay {
     repeated common.model.v2.GroupInfo data = 1;
 }
 
-message GetGroupInfoByCodeReq{
+message GetGroupInfoByCodeReq {
     string code = 1;
     string operationID = 2;
     string opUserID = 3;
 }
 
-// 加入群组列表请求
-message JoinGroupListReq {
-    string userID = 1; // 用户id
-    map<string, int64> changTime = 2;//群信息更新时间列表
+message KickGroupMemberReq {
+    string groupID = 1;
+    repeated string kickedUserIDList = 2;
+    string reason = 3;
+    string operationID = 4;
 }
 
-// 加入群组列表返回
-message JoinGroupListReply {
-    repeated api.common.model.v2.GroupItem items = 1; // 群列表
+message KickGroupMemberReply {
+    repeated common.model.v2.UserIDResult data = 1;
 }
+
+message GetGroupMemberListReq {
+    string groupID = 1;
+    int32 filter = 2;
+    int32 nextSeq = 3;
+    int32 showNumber = 4;
+    int32 pageNumber = 5;
+    string operationID = 6;
+}
+
+message GetGroupMemberListReply {
+    int32 nextSeq = 1;
+    repeated common.model.v2.GroupMemberFullInfo data = 2;
+}
+
+message GetGroupAllMemberReq {
+    string groupID = 1;
+    string operationID = 2;
+    int32 offset = 3;
+    int32 count = 4;
+}
+
+message GetGroupMembersInfoReq {
+    string groupID = 1;
+    repeated string memberList = 2;
+    string operationID = 3;
+}
+
+message GetGroupAllMemberReply {
+    repeated common.model.v2.GroupMemberFullInfo data = 1;
+}
+
+message InviteUserToGroupReq {
+    string groupID = 1;
+    string invitedUserIDList = 2;
+    string reason = 3;
+    string operationID = 4;
+}
+
+message InviteUserToGroupReply {
+    repeated common.model.v2.UserIDResult data = 1;
+}
+
+message GetJoinedGroupListReq {
+    string operatorID = 1;
+    string fromUserID = 2;
+}
+
+message GetJoinedGroupListReply {
+    repeated common.model.v2.GroupInfo data = 1;
+}
+
+message DismissGroupReq {
+    string groupID = 1;
+    string operatorID = 2;
+}
+
+message MuteGroupMemberReq {
+    string operatorID = 1;
+    string groupID = 2;
+    string userID = 3;
+    int32 mutedSeconds = 4;
+}
+
+message CancelMuteGroupMemberReq {
+    string operatorID = 1;
+    string groupID = 2;
+    string userID = 3;
+}
+
+message MuteGroupReq {
+    string operatorID = 1;
+    string groupID = 2;
+}
+
+message CancelMuteGroupReq {
+    string operatorID = 1;
+    string groupID = 2;
+}
+
+message SetGroupMemberNicknameReq {
+    string operatorID = 1;
+    string groupID = 2;
+    string userID = 3;
+    string nickname = 4;
+}
+
+message SetGroupMemberInfoReq {
+    string operatorID = 1;
+    string groupID = 2;
+    string userID = 3;
+    string nickname = 4;
+    string faceURL = 5;
+    int32 roleLevel = 6;
+    string background_url = 7;
+    string ex = 8;
+}
+
+message GetGroupAbstractInfoReq {
+    string operatorID = 1;
+    string groupID = 2;
+}
+
+message GetGroupAbstractInfoReply {
+    int32 groupMemberNumber = 1;
+    int64 groupMemberListHash = 2;
+}
+
+//// 加入群组列表请求
+//message JoinGroupListReq {
+//    string userID = 1; // 用户id
+//    map<string, int64> changTime = 2;//群信息更新时间列表
+//}
+//
+//// 加入群组列表返回
+//message JoinGroupListReply {
+//    repeated api.common.model.v2.GroupItem items = 1; // 群列表
+//}
