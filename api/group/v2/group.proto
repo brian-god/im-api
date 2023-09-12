@@ -86,7 +86,7 @@ message JoinGroupReq {
 message QuitGroupReq {
     string groupID = 1;
     string operationID = 2;
-    string OpUserID = 3;
+    string opUserID = 3;
 }
 
 message ApplicationGroupResponseReq {
@@ -95,7 +95,7 @@ message ApplicationGroupResponseReq {
     string fromUserID = 3;
     string handledMsg = 4;
     int32 handleResult = 5;
-    string OpUserID = 6;
+    string opUserID = 6;
 }
 
 message TransferGroupOwnerReq {
@@ -103,13 +103,13 @@ message TransferGroupOwnerReq {
     string oldOwnerUserID = 2;
     string newOwnerUserID = 3;
     string operationID = 4;
-    string OpUserID = 5;
+    string opUserID = 5;
 }
 
 message GetGroupApplicationListReq {
     string operationID = 1;
     string fromUserID = 2;
-    string OpUserID = 3;
+    string opUserID = 3;
 }
 
 message GetGroupApplicationListReply {
@@ -125,13 +125,13 @@ message GetGroupApplicationByUserAndGroupReq {
 message GetUserReqGroupApplicationListReq {
     string userID = 1;
     string operationID = 2;
-    string OpUserID = 3;
+    string opUserID = 3;
 }
 
 message GetGroupInfoReq {
     repeated string groupIDList = 1;
     string operationID = 2;
-    string OpUserID = 3;
+    string opUserID = 3;
 }
 
 message GetGroupInfoReplay {
@@ -149,6 +149,7 @@ message KickGroupMemberReq {
     repeated string kickedUserIDList = 2;
     string reason = 3;
     string operationID = 4;
+    string opUserID = 5;
 }
 
 message KickGroupMemberReply {
@@ -162,6 +163,7 @@ message GetGroupMemberListReq {
     int32 showNumber = 4;
     int32 pageNumber = 5;
     string operationID = 6;
+    string opUserID = 7;
 }
 
 message GetGroupMemberListReply {
@@ -174,12 +176,14 @@ message GetGroupAllMemberReq {
     string operationID = 2;
     int32 offset = 3;
     int32 count = 4;
+    string opUserID = 5;
 }
 
 message GetGroupMembersInfoReq {
     string groupID = 1;
     repeated string memberList = 2;
     string operationID = 3;
+    string opUserID = 4;
 }
 
 message GetGroupAllMemberReply {
@@ -188,9 +192,10 @@ message GetGroupAllMemberReply {
 
 message InviteUserToGroupReq {
     string groupID = 1;
-    string invitedUserIDList = 2;
+    repeated string invitedUserIDList = 2;
     string reason = 3;
     string operationID = 4;
+    string opUserID = 5;
 }
 
 message InviteUserToGroupReply {
@@ -200,6 +205,7 @@ message InviteUserToGroupReply {
 message GetJoinedGroupListReq {
     string operatorID = 1;
     string fromUserID = 2;
+    string opUserID = 3;
 }
 
 message GetJoinedGroupListReply {
@@ -209,29 +215,34 @@ message GetJoinedGroupListReply {
 message DismissGroupReq {
     string groupID = 1;
     string operatorID = 2;
+    string opUserID = 3;
 }
 
 message MuteGroupMemberReq {
     string operatorID = 1;
     string groupID = 2;
     string userID = 3;
-    int32 mutedSeconds = 4;
+    uint32 mutedSeconds = 4;
+    string opUserID = 5;
 }
 
 message CancelMuteGroupMemberReq {
     string operatorID = 1;
     string groupID = 2;
     string userID = 3;
+    string opUserID = 4;
 }
 
 message MuteGroupReq {
     string operatorID = 1;
     string groupID = 2;
+    string opUserID = 3;
 }
 
 message CancelMuteGroupReq {
     string operatorID = 1;
     string groupID = 2;
+    string opUserID = 3;
 }
 
 message SetGroupMemberNicknameReq {
@@ -239,6 +250,7 @@ message SetGroupMemberNicknameReq {
     string groupID = 2;
     string userID = 3;
     string nickname = 4;
+    string opUserID = 5;
 }
 
 message SetGroupMemberInfoReq {
@@ -250,16 +262,18 @@ message SetGroupMemberInfoReq {
     int32 roleLevel = 6;
     string background_url = 7;
     string ex = 8;
+    string opUserID = 9;
 }
 
 message GetGroupAbstractInfoReq {
     string operatorID = 1;
     string groupID = 2;
+    string opUserID = 3;
 }
 
 message GetGroupAbstractInfoReply {
     int32 groupMemberNumber = 1;
-    int64 groupMemberListHash = 2;
+    uint64 groupMemberListHash = 2;
 }
 
 //// 加入群组列表请求
