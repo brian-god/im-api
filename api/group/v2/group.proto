@@ -21,7 +21,7 @@ service Group {
     rpc GetGroupApplicationByUserAndGroup (GetGroupApplicationByUserAndGroupReq) returns (GetGroupApplicationListReply); // 根据用户和群获取加群请求明细
     rpc GetUserReqGroupApplicationList (GetUserReqGroupApplicationListReq) returns (GetGroupApplicationListReply); // 获取用户加群申请列表
     rpc GetGroupsInfo (GetGroupInfoReq) returns (GetGroupInfoReplay); // 通过群ID列表获取群信息
-    rpc GetGroupInfoByCode (GetGroupInfoByCodeReq) returns (GetGroupInfoReplay); // 通过code获取群信息
+    rpc GetGroupInfoByCode (GetGroupInfoByCodeReq) returns (GetGroupInfoByCodeReply); // 通过code获取群信息
     rpc KickGroupMember (KickGroupMemberReq) returns (KickGroupMemberReply); // 把用户踢出群组
     rpc GetGroupMemberList (GetGroupMemberListReq) returns (GetGroupMemberListReply); // 获取群组成员
     rpc GetGroupAllMemberList (GetGroupAllMemberReq) returns (GetGroupAllMemberReply); // 获取全部群成员列表
@@ -145,6 +145,10 @@ message GetGroupInfoByCodeReq {
     string code = 1;
     string operationID = 2;
     string opUserID = 3;
+}
+
+message GetGroupInfoByCodeReply{
+    common.model.v2.GroupInfo data = 1;
 }
 
 message KickGroupMemberReq {
