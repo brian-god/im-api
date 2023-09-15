@@ -37,6 +37,7 @@ const (
 	Group_GetGroupMembersInfo_FullMethodName               = "/api.group.v2.Group/GetGroupMembersInfo"
 	Group_InviteUserToGroup_FullMethodName                 = "/api.group.v2.Group/InviteUserToGroup"
 	Group_GetJoinedGroupList_FullMethodName                = "/api.group.v2.Group/GetJoinedGroupList"
+	Group_GetJoinedGroupBaseInfoList_FullMethodName        = "/api.group.v2.Group/getJoinedGroupBaseInfoList"
 	Group_DismissGroup_FullMethodName                      = "/api.group.v2.Group/DismissGroup"
 	Group_MuteGroupMember_FullMethodName                   = "/api.group.v2.Group/MuteGroupMember"
 	Group_CancelMuteGroupMember_FullMethodName             = "/api.group.v2.Group/CancelMuteGroupMember"
@@ -68,6 +69,7 @@ type GroupClient interface {
 	GetGroupMembersInfo(ctx context.Context, in *GetGroupMembersInfoReq, opts ...grpc.CallOption) (*GetGroupAllMemberReply, error)
 	InviteUserToGroup(ctx context.Context, in *InviteUserToGroupReq, opts ...grpc.CallOption) (*InviteUserToGroupReply, error)
 	GetJoinedGroupList(ctx context.Context, in *GetJoinedGroupListReq, opts ...grpc.CallOption) (*GetJoinedGroupListReply, error)
+	GetJoinedGroupBaseInfoList(ctx context.Context, in *GetJoinedGroupListReq, opts ...grpc.CallOption) (*GetGroupsBaseInfoResp, error)
 	DismissGroup(ctx context.Context, in *DismissGroupReq, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	MuteGroupMember(ctx context.Context, in *MuteGroupMemberReq, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	CancelMuteGroupMember(ctx context.Context, in *CancelMuteGroupMemberReq, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -239,6 +241,15 @@ func (c *groupClient) GetJoinedGroupList(ctx context.Context, in *GetJoinedGroup
 	return out, nil
 }
 
+func (c *groupClient) GetJoinedGroupBaseInfoList(ctx context.Context, in *GetJoinedGroupListReq, opts ...grpc.CallOption) (*GetGroupsBaseInfoResp, error) {
+	out := new(GetGroupsBaseInfoResp)
+	err := c.cc.Invoke(ctx, Group_GetJoinedGroupBaseInfoList_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *groupClient) DismissGroup(ctx context.Context, in *DismissGroupReq, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, Group_DismissGroup_FullMethodName, in, out, opts...)
@@ -332,6 +343,7 @@ type GroupServer interface {
 	GetGroupMembersInfo(context.Context, *GetGroupMembersInfoReq) (*GetGroupAllMemberReply, error)
 	InviteUserToGroup(context.Context, *InviteUserToGroupReq) (*InviteUserToGroupReply, error)
 	GetJoinedGroupList(context.Context, *GetJoinedGroupListReq) (*GetJoinedGroupListReply, error)
+	GetJoinedGroupBaseInfoList(context.Context, *GetJoinedGroupListReq) (*GetGroupsBaseInfoResp, error)
 	DismissGroup(context.Context, *DismissGroupReq) (*emptypb.Empty, error)
 	MuteGroupMember(context.Context, *MuteGroupMemberReq) (*emptypb.Empty, error)
 	CancelMuteGroupMember(context.Context, *CancelMuteGroupMemberReq) (*emptypb.Empty, error)
@@ -397,6 +409,9 @@ func (UnimplementedGroupServer) InviteUserToGroup(context.Context, *InviteUserTo
 }
 func (UnimplementedGroupServer) GetJoinedGroupList(context.Context, *GetJoinedGroupListReq) (*GetJoinedGroupListReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetJoinedGroupList not implemented")
+}
+func (UnimplementedGroupServer) GetJoinedGroupBaseInfoList(context.Context, *GetJoinedGroupListReq) (*GetGroupsBaseInfoResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetJoinedGroupBaseInfoList not implemented")
 }
 func (UnimplementedGroupServer) DismissGroup(context.Context, *DismissGroupReq) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DismissGroup not implemented")
@@ -741,6 +756,24 @@ func _Group_GetJoinedGroupList_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Group_GetJoinedGroupBaseInfoList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetJoinedGroupListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GroupServer).GetJoinedGroupBaseInfoList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Group_GetJoinedGroupBaseInfoList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GroupServer).GetJoinedGroupBaseInfoList(ctx, req.(*GetJoinedGroupListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Group_DismissGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DismissGroupReq)
 	if err := dec(in); err != nil {
@@ -959,6 +992,10 @@ var Group_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetJoinedGroupList",
 			Handler:    _Group_GetJoinedGroupList_Handler,
+		},
+		{
+			MethodName: "getJoinedGroupBaseInfoList",
+			Handler:    _Group_GetJoinedGroupBaseInfoList_Handler,
 		},
 		{
 			MethodName: "DismissGroup",
