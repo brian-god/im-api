@@ -34,6 +34,9 @@ message GroupInfo{
   int32 applyMemberFriend = 16;
   uint32 notificationUpdateTime = 17;
   string notificationUserID = 18;
+  bool   isReal = 19;
+  uint32 isOpen = 20;
+  uint32 allowPrivateChat = 21;
 }
 
 message GroupRequest{
@@ -69,7 +72,4 @@ message GroupMemberFullInfo {
   uint32 muteEndTime = 11;
   string inviterUserID = 12;
   string backgroundUrl = 13;
-  bool   isReal = 14;
-  uint32 isOpen = 15;
-  uint32 allowPrivateChat = 16;
 }
