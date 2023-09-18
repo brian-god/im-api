@@ -4,6 +4,7 @@ package api.group.v2;
 
 import "common/model/v2/group.proto";
 import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
 
 option go_package = "github.com/brian-god/xy-apis/api/group/v2;v2";
 option java_multiple_files = true;
@@ -72,10 +73,13 @@ message SetGroupInfoReq {
     string faceURL = 5;
     string ex = 6;
     string operationID = 7;
-    int32 needVerification = 8;
-    int32 lookMemberInfo = 9;
-    int32 applyMemberFriend = 10;
+    google.protobuf.Int32Value needVerification = 8;
+    google.protobuf.Int32Value lookMemberInfo = 9;
+    google.protobuf.Int32Value applyMemberFriend = 10;
     string opUserID = 11;
+    google.protobuf.Int32Value isReal  = 12;
+    google.protobuf.Int32Value isOpen  = 13;
+    google.protobuf.Int32Value allowPrivateChat  = 14;
 }
 
 message JoinGroupReq {
