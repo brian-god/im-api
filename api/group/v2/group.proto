@@ -29,7 +29,7 @@ service Group {
     rpc GetGroupMembersInfo (GetGroupMembersInfoReq) returns (GetGroupAllMemberReply); // 获取群成员信息
     rpc InviteUserToGroup (InviteUserToGroupReq) returns (InviteUserToGroupReply); // 将用户拉入群组
     rpc GetJoinedGroupList (GetJoinedGroupListReq) returns (GetJoinedGroupListReply); // 获取用户加入群列表
-    rpc getJoinedGroupBaseInfoList (GetJoinedGroupListReq) returns (GetGroupsBaseInfoResp);
+    rpc GetJoinedGroupBaseInfoList (GetJoinedGroupListReq) returns (GetGroupsBaseInfoResp);
     rpc DismissGroup (DismissGroupReq) returns (google.protobuf.Empty); // 解散群组
     rpc MuteGroupMember (MuteGroupMemberReq) returns (google.protobuf.Empty); // 禁言群成员
     rpc CancelMuteGroupMember (CancelMuteGroupMemberReq) returns (google.protobuf.Empty); // 取消禁言群成员
@@ -236,6 +236,7 @@ message GroupsBaseInfo {
     string code = 3; // 群编码,对应前台的群id
     string faceURL = 4; // 头像
     int32 memberCount = 5; // 成员数量
+    int32 groupType = 13; // 群类型
 }
 
 message DismissGroupReq {
