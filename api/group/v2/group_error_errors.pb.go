@@ -430,3 +430,17 @@ func IsQueryFail(err error) bool {
 func ErrorQueryFail(format string, args ...interface{}) *errors.Error {
 	return errors.New(522, GroupErrorReason_QUERY_FAIL.String(), fmt.Sprintf(format, args...))
 }
+
+// 群成员人数上限
+func IsGroupMaxMemberLimitError(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == GroupErrorReason_GROUP_MAX_MEMBER_LIMIT_ERROR.String() && e.Code == 523
+}
+
+// 群成员人数上限
+func ErrorGroupMaxMemberLimitError(format string, args ...interface{}) *errors.Error {
+	return errors.New(523, GroupErrorReason_GROUP_MAX_MEMBER_LIMIT_ERROR.String(), fmt.Sprintf(format, args...))
+}

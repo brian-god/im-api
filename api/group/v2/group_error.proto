@@ -73,4 +73,8 @@ enum GroupErrorReason {
   UPDATE_FAIL = 28 [(errors.code) = 521];
   // 查询错误
   QUERY_FAIL = 29 [(errors.code) = 522];
+
+  // 群成员人数上限
+  GROUP_MAX_MEMBER_LIMIT_ERROR = 30 [(errors.code) = 523];
+
 }
