@@ -30,6 +30,7 @@ message FriendInfo{
 	int64 birth = 14; // 生日
 	int32 addSource = 15; //添加来源
 	string ex = 16; //扩展字段
+	string backgroundUrl = 17; // 聊天背景图片地址
 
 }
 

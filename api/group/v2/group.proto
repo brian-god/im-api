@@ -38,6 +38,8 @@ service Group {
     rpc SetGroupMemberNickname (SetGroupMemberNicknameReq) returns (google.protobuf.Empty); // 设置群成员昵称
     rpc SetGroupMemberInfo (SetGroupMemberInfoReq) returns (google.protobuf.Empty); // 修改群成员信息
     rpc GetGroupAbstractInfo (GetGroupAbstractInfoReq) returns (GetGroupAbstractInfoReply); // 获取群组摘要信息
+    rpc SetGroupBackground(SetGroupBackgroundReq) returns (google.protobuf.Empty); // 设置背景图片
+//    rpc GetGroupBackground(GetGroupBackgroundReq) returns (GetGroupBackgroundResp); // 获取背景图片
 
     //    rpc GetJoinGroupList (JoinGroupListReq) returns (JoinGroupListReply);
 }
@@ -312,4 +314,20 @@ message GetGroupAbstractInfoReply {
 //// 加入群组列表返回
 //message JoinGroupListReply {
 //    repeated api.common.model.v2.GroupItem items = 1; // 群列表
+//}
+
+message SetGroupBackgroundReq {
+    string opUserID = 1;
+    string operationID = 2;
+    string backgroundUrl = 3;
+    string groupID = 4;
+}
+
+//message GetGroupBackgroundReq {
+//    string opUserID = 1;
+//    string operationID = 2;
+//    string groupID = 4;
+//}
+//message GetGroupBackgroundResp {
+//    string backgroundUrl = 2;
 //}

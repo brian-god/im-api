@@ -7,6 +7,7 @@ option java_multiple_files = true;
 option java_package = "api.friend.v2";
 import "common/model/v2/friend.proto";
 import "common/model/common.proto";
+import "google/protobuf/empty.proto";
 
 service Friend {
   //获取好友列表仅仅返回id昵称和头像
@@ -33,6 +34,8 @@ service Friend {
   rpc AddFriendResponse(AddFriendResponseReq) returns(AddFriendResponseReply);
   // 设置好友备注
   rpc SetFriendRemark(SetFriendRemarkReq) returns(SetFriendRemarkReply);
+  // 设置好友聊天背景图片
+  rpc SetFriendBackground(SetFriendBackgroundReq) returns (google.protobuf.Empty); // 设置好友聊天背景图片
 }
 
 /*
@@ -186,4 +189,10 @@ message SetFriendRemarkReq{
 message SetFriendRemarkReply{
 }
 
-
+// 设置好友聊天背景图片
+message SetFriendBackgroundReq {
+  string opUserID = 1;
+  string operationID = 2;
+  string backgroundUrl = 3;
+  string friendUserId = 4; //好友id
+}

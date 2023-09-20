@@ -46,6 +46,7 @@ const (
 	Group_SetGroupMemberNickname_FullMethodName            = "/api.group.v2.Group/SetGroupMemberNickname"
 	Group_SetGroupMemberInfo_FullMethodName                = "/api.group.v2.Group/SetGroupMemberInfo"
 	Group_GetGroupAbstractInfo_FullMethodName              = "/api.group.v2.Group/GetGroupAbstractInfo"
+	Group_SetGroupBackground_FullMethodName                = "/api.group.v2.Group/SetGroupBackground"
 )
 
 // GroupClient is the client API for Group service.
@@ -78,6 +79,7 @@ type GroupClient interface {
 	SetGroupMemberNickname(ctx context.Context, in *SetGroupMemberNicknameReq, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	SetGroupMemberInfo(ctx context.Context, in *SetGroupMemberInfoReq, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetGroupAbstractInfo(ctx context.Context, in *GetGroupAbstractInfoReq, opts ...grpc.CallOption) (*GetGroupAbstractInfoReply, error)
+	SetGroupBackground(ctx context.Context, in *SetGroupBackgroundReq, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type groupClient struct {
@@ -322,6 +324,15 @@ func (c *groupClient) GetGroupAbstractInfo(ctx context.Context, in *GetGroupAbst
 	return out, nil
 }
 
+func (c *groupClient) SetGroupBackground(ctx context.Context, in *SetGroupBackgroundReq, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, Group_SetGroupBackground_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // GroupServer is the server API for Group service.
 // All implementations must embed UnimplementedGroupServer
 // for forward compatibility
@@ -352,6 +363,7 @@ type GroupServer interface {
 	SetGroupMemberNickname(context.Context, *SetGroupMemberNicknameReq) (*emptypb.Empty, error)
 	SetGroupMemberInfo(context.Context, *SetGroupMemberInfoReq) (*emptypb.Empty, error)
 	GetGroupAbstractInfo(context.Context, *GetGroupAbstractInfoReq) (*GetGroupAbstractInfoReply, error)
+	SetGroupBackground(context.Context, *SetGroupBackgroundReq) (*emptypb.Empty, error)
 	mustEmbedUnimplementedGroupServer()
 }
 
@@ -436,6 +448,9 @@ func (UnimplementedGroupServer) SetGroupMemberInfo(context.Context, *SetGroupMem
 }
 func (UnimplementedGroupServer) GetGroupAbstractInfo(context.Context, *GetGroupAbstractInfoReq) (*GetGroupAbstractInfoReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetGroupAbstractInfo not implemented")
+}
+func (UnimplementedGroupServer) SetGroupBackground(context.Context, *SetGroupBackgroundReq) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SetGroupBackground not implemented")
 }
 func (UnimplementedGroupServer) mustEmbedUnimplementedGroupServer() {}
 
@@ -918,6 +933,24 @@ func _Group_GetGroupAbstractInfo_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Group_SetGroupBackground_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SetGroupBackgroundReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GroupServer).SetGroupBackground(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Group_SetGroupBackground_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GroupServer).SetGroupBackground(ctx, req.(*SetGroupBackgroundReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Group_ServiceDesc is the grpc.ServiceDesc for Group service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1028,6 +1061,10 @@ var Group_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetGroupAbstractInfo",
 			Handler:    _Group_GetGroupAbstractInfo_Handler,
+		},
+		{
+			MethodName: "SetGroupBackground",
+			Handler:    _Group_SetGroupBackground_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
