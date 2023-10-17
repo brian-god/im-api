@@ -1,14 +1,14 @@
 syntax = "proto3";
 
-package api.group.v2;
+package api.group.v1;
 
-import "common/model/v2/group.proto";
+import "common/model/v1/group.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/wrappers.proto";
 
-option go_package = "github.com/brian-god/xy-apis/api/group/v2;v2";
+option go_package = "github.com/brian-god/im-api/api/group/v1;v1";
 option java_multiple_files = true;
-option java_package = "api.group.v2";
+option java_package = "api.group.v1";
 
 service Group {
 
@@ -64,7 +64,7 @@ message CreateGroupReq {
 }
 
 message CreateGroupReply {
-    common.model.v2.GroupInfo data = 1;
+    common.model.v1.GroupInfo data = 1;
 }
 
 message SetGroupInfoReq {
@@ -123,7 +123,7 @@ message GetGroupApplicationListReq {
 }
 
 message GetGroupApplicationListReply {
-    repeated common.model.v2.GroupRequest data = 1;
+    repeated common.model.v1.GroupRequest data = 1;
 }
 
 message GetGroupApplicationByUserAndGroupReq {
@@ -145,7 +145,7 @@ message GetGroupInfoReq {
 }
 
 message GetGroupInfoReplay {
-    repeated common.model.v2.GroupInfo data = 1;
+    repeated common.model.v1.GroupInfo data = 1;
 }
 
 message GetGroupInfoByCodeReq {
@@ -155,7 +155,7 @@ message GetGroupInfoByCodeReq {
 }
 
 message GetGroupInfoByCodeReply{
-    common.model.v2.GroupInfo data = 1;
+    common.model.v1.GroupInfo data = 1;
 }
 
 message KickGroupMemberReq {
@@ -167,7 +167,7 @@ message KickGroupMemberReq {
 }
 
 message KickGroupMemberReply {
-    repeated common.model.v2.UserIDResult data = 1;
+    repeated common.model.v1.UserIDResult data = 1;
 }
 
 message GetGroupMemberListReq {
@@ -182,7 +182,7 @@ message GetGroupMemberListReq {
 
 message GetGroupMemberListReply {
     int32 nextSeq = 1;
-    repeated common.model.v2.GroupMemberFullInfo data = 2;
+    repeated common.model.v1.GroupMemberFullInfo data = 2;
 }
 
 message GetGroupAllMemberReq {
@@ -201,7 +201,7 @@ message GetGroupMembersInfoReq {
 }
 
 message GetGroupAllMemberReply {
-    repeated common.model.v2.GroupMemberFullInfo data = 1;
+    repeated common.model.v1.GroupMemberFullInfo data = 1;
 }
 
 message InviteUserToGroupReq {
@@ -213,7 +213,7 @@ message InviteUserToGroupReq {
 }
 
 message InviteUserToGroupReply {
-    repeated common.model.v2.UserIDResult data = 1;
+    repeated common.model.v1.UserIDResult data = 1;
 }
 
 message GetJoinedGroupListReq {
@@ -223,7 +223,7 @@ message GetJoinedGroupListReq {
 }
 
 message GetJoinedGroupListReply {
-    repeated common.model.v2.GroupInfo data = 1;
+    repeated common.model.v1.GroupInfo data = 1;
 }
 
 message GetGroupsBaseInfoResp {
@@ -313,7 +313,7 @@ message GetGroupAbstractInfoReply {
 //
 //// 加入群组列表返回
 //message JoinGroupListReply {
-//    repeated api.common.model.v2.GroupItem items = 1; // 群列表
+//    repeated api.common.model.v1.GroupItem items = 1; // 群列表
 //}
 
 message SetGroupBackgroundReq {

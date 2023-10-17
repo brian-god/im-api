@@ -1,12 +1,12 @@
 syntax = "proto3";
 
-package api.common.model.v2;
+package api.common.model.v1;
 
-import "common/model/v2/friend.proto";
+import "common/model/v1/friend.proto";
 
-option go_package = "github.com/brian-god/xy-apis/api/common/model/v2;v2";
+option go_package = "github.com/brian-god/im-api/api/common/model/v1;v1";
 option java_multiple_files = true;
-option java_package = "api.common.model.v2";
+option java_package = "api.common.model.v1";
 
 // 群列表项
 message GroupItem {

@@ -1,10 +1,10 @@
 syntax = "proto3";
 
-package api.common.model.v2;
+package api.common.model.v1;
 
-option go_package = "github.com/brian-god/xy-apis/api/common/net/v2;v2";
+option go_package = "github.com/brian-god/im-api/api/common/net/v1;v1";
 option java_multiple_files = true;
-option java_package = "api.common.net.v2";
+option java_package = "api.common.net.v1";
 // 好友列表项
 message Result {
 	int32 code =1; // 编码

@@ -1,11 +1,11 @@
 syntax = "proto3";
 
-package api.friend.v2;
+package api.friend.v1;
 
-option go_package = "github.com/brian-god/xy-apis/api/friend/v2;v2";
+option go_package = "github.com/brian-god/im-api/api/friend/v1;v1";
 option java_multiple_files = true;
-option java_package = "api.friend.v2";
-import "common/model/v2/friend.proto";
+option java_package = "api.friend.v1";
+import "common/model/v1/friend.proto";
 import "common/model/common.proto";
 import "google/protobuf/empty.proto";
 
@@ -48,7 +48,7 @@ message FriendListReq {
 }
 
 message FriendListReply {
-  repeated api.common.model.v2.FriendItem items=1; // 好友列表
+  repeated api.common.model.v1.FriendItem items=1; // 好友列表
 }
 /*
     获取好友信息
@@ -59,7 +59,7 @@ message GetFriendsInfoReq{
   repeated string FriendUserIDs = 2; //好友id
 }
 message GetFriendInfoReply{
-  repeated api.common.model.v2.FriendInfo list = 1;
+  repeated api.common.model.v1.FriendInfo list = 1;
 }
 
 /*
@@ -87,7 +87,7 @@ message GetFriendApplyListReq{
 }
 message GetFriendApplyListReply{
   int64  Total = 1; // 总数
-  repeated api.common.model.v2.FriendRequest list = 2; //列表数据
+  repeated api.common.model.v1.FriendRequest list = 2; //列表数据
 }
 
 
@@ -149,7 +149,7 @@ message GetBlacklistReq{
   string fromUserID = 3; //来源id
 }
 message GetBlacklistReply{
-  repeated api.common.model.v2.PublicUserInfo list = 3;
+  repeated api.common.model.v1.PublicUserInfo list = 3;
 }
 /*
     删除好友

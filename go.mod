@@ -1,4 +1,4 @@
-module github.com/brian-god/xy-apis
+module github.com/brian-god/im-api
 
 go 1.20
 

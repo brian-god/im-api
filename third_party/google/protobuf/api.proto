@@ -147,20 +147,20 @@ message Method {
 //       }
 //     }
 //
-//     package google.storage.v2;
+//     package google.storage.v1;
 //     service Storage {
 //       rpc GetAcl(GetAclRequest) returns (Acl);
 //
 //       // Get a data record.
 //       rpc GetData(GetDataRequest) returns (Data) {
-//         option (google.api.http).get = "/v2/{resource=**}";
+//         option (google.api.http).get = "/v1/{resource=**}";
 //       }
 //     }
 //
 // Example of a mixin configuration:
 //
 //     apis:
-//     - name: google.storage.v2.Storage
+//     - name: google.storage.v1.Storage
 //       mixins:
 //       - name: google.acl.v1.AccessControl
 //
@@ -173,18 +173,18 @@ message Method {
 //     service Storage {
 //       // Get the underlying ACL object.
 //       rpc GetAcl(GetAclRequest) returns (Acl) {
-//         option (google.api.http).get = "/v2/{resource=**}:getAcl";
+//         option (google.api.http).get = "/v1/{resource=**}:getAcl";
 //       }
 //       ...
 //     }
 //
-// Note how the version in the path pattern changed from `v1` to `v2`.
+// Note how the version in the path pattern changed from `v1` to `v1`.
 //
 // If the `root` field in the mixin is specified, it should be a
 // relative path under which inherited HTTP paths are placed. Example:
 //
 //     apis:
-//     - name: google.storage.v2.Storage
+//     - name: google.storage.v1.Storage
 //       mixins:
 //       - name: google.acl.v1.AccessControl
 //         root: acls
@@ -194,7 +194,7 @@ message Method {
 //     service Storage {
 //       // Get the underlying ACL object.
 //       rpc GetAcl(GetAclRequest) returns (Acl) {
-//         option (google.api.http).get = "/v2/acls/{resource=**}:getAcl";
+//         option (google.api.http).get = "/v1/acls/{resource=**}:getAcl";
 //       }
 //       ...
 //     }
