@@ -3,73 +3,80 @@ syntax = "proto3";
 package api.common.model.v1;
 
 import "common/model/v1/friend.proto";
-
+import "common/model/v1/user.proto";
 option go_package = "github.com/brian-god/im-api/api/common/model/v1;v1";
 option java_multiple_files = true;
 option java_package = "api.common.model.v1";
 
-// 群列表项
-message GroupItem {
-  string groupID = 1; // 用户id
-  string nickName = 2; // 昵称
+// 群基本信息
+message GroupBaseInfo {
+  string groupID = 1; // 群id
+  string groupName = 2; // 群名称
   string faceURL = 3; // 头像
+  int64 memberCount = 4; // 群人数
+  int64 status = 5; //群状态
 }
 
+// 群信息
 message GroupInfo{
-  string groupID = 1;
-  string groupName = 2;
-  string code = 3;
-  string notification = 4;
-  string introduction = 5;
-  string faceURL = 6;
-  string ownerUserID = 7;
-  uint32 createTime = 8;
-  uint32 memberCount = 9;
-  string ex = 10;
-  int32 status = 11;
-  string creatorUserID = 12;
-  int32 groupType = 13;
-  int32 needVerification = 14;
-  int32 lookMemberInfo = 15;
-  int32 applyMemberFriend = 16;
-  uint32 notificationUpdateTime = 17;
-  string notificationUserID = 18;
-  int32 isReal = 19;
-  int32 isOpen = 20;
-  int32 allowPrivateChat = 21;
+  string groupID = 1;  // 群id
+  string groupName = 2; // 群名称
+  string code = 3; // 群编码
+  string notification = 4; // 群公告
+  string introduction = 5; // 群简介
+  string faceURL = 6;  //群头像
+  string ownerUserID = 7; // 群主id
+  uint32 createTime = 8; // 创建时间
+  uint32 memberCount = 9; // 群人数
+  string ex = 10; //扩展字段
+  int32 status = 11; //群状态
+  string creatorUserID = 12; //创建者id
+  int32 groupType = 13; //群类型
+  int32 needVerification = 14; //加群是否需要验证:0需要,1不需要
+  int32 lookMemberInfo = 15; //支持成员信息查看:0支持,1不支持
+  int32 applyMemberFriend = 16; //是否可通过群加好友:0支持,1不支持
+  uint32 notificationUpdateTime = 17; //群公告更新时间
+  string notificationUserID = 18; //更新公告用户id
+  int32 isReal = 19; //是否实名认证，默认否
+  int32 isOpen = 20;  //是否公开群组,1:开启;2:关闭
+  int32 allowPrivateChat = 21; //允许成员私聊,1:开启;2:关闭
+  int32 maxMemberCount = 22; //群的最大用户数
+  int32 onlyManageUpdateName = 23; //是否仅管理员或群主能够更新群名称
 }
-
+// 群请求信息
 message GroupRequest{
-  PublicUserInfo userInfo = 1;
-  GroupInfo groupInfo = 2;
-  int32 handleResult = 3;
-  string reqMsg = 4;
-  string  handleMsg = 5;
-  uint32 reqTime = 6;
-  string handleUserID = 7;
-  uint32 handleTime = 8;
-  string ex = 9;
-  int32 joinSource = 10;
-  string inviterUserID = 11;
+  PublicUserInfo userInfo = 1; //请求用户id
+  GroupInfo groupInfo = 2; //群基本信息
+  int32 handleResult = 3; //处理结果 0:待处理1:同意2；拒绝
+  string reqMsg = 4;  //请求信息
+  string  handleMsg = 5; //处理信息
+  uint32 reqTime = 6; // 请求时间
+  string handleUserID = 7; // 处理人
+  uint32 handleTime = 8;//处理时间
+  string ex = 9; //扩展
+  int32 joinSource = 10; //加入来源
+  string inviterUserID = 11;//邀请人
 }
-
-message UserIDResult {
-  string userID = 1;
-  string result = 2;
-}
-
-message GroupMemberFullInfo {
-  string groupID = 1 ;
-  string userID = 2 ;
-  int32 roleLevel = 3;
-  int32 joinTime = 4;
-  string nickname = 5;
-  string faceURL = 6;
-  int32 appMangerLevel = 7; //if >0
-  int32 joinSource = 8;
-  string operatorUserID = 9;
-  string ex = 10;
-  uint32 muteEndTime = 11;
-  string inviterUserID = 12;
-  string backgroundUrl = 13;
+// 群成员信息
+message GroupMemberInfo {
+  string  groupID = 1; //群ID
+  string userID = 2; //用户ID
+  int32 roleLevel = 3; //用户等级
+  int64 joinTime = 4;//加群时间
+  string nickname = 5; //用户昵称
+  string faceUrl = 6;//头像
+  string attachedInfo = 7; //附加信息
+  int32 joinSource = 8; //来源
+  string  operatorUserID = 9;//操作人id
+  string ex = 10;//扩展
+  int64 muteEndTime = 11;//禁言时间
+  string message = 12;//签名
+  string code = 13;//邀请码
+  string phone = 14;//手机号
+  string email = 15;//邮箱
+  int64 birth = 16;//生日
+  int32 gender = 17;//性别
+  string inviterUserID = 18; //邀请人
+  string groupUserName = 19; //用户在群中的昵称
+  string backgroundUrl = 20;//背景图片
 }

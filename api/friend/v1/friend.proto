@@ -5,194 +5,300 @@ package api.friend.v1;
 option go_package = "github.com/brian-god/im-api/api/friend/v1;v1";
 option java_multiple_files = true;
 option java_package = "api.friend.v1";
+import "validate/validate.proto";
 import "common/model/v1/friend.proto";
+import "common/model/v1/user.proto";
 import "common/model/common.proto";
 import "google/protobuf/empty.proto";
 
 service Friend {
-  //获取好友列表仅仅返回id昵称和头像
-  rpc GetFriendList (FriendListReq) returns (FriendListReply);
-  // 获取好友信息
-  rpc GetFriendsInfo(GetFriendsInfoReq) returns(GetFriendInfoReply);
-  // 添加好友
-  rpc AddFriend(AddFriendReq) returns(AddFriendReply);
-  // 获取好友申请列表
-  rpc GetFriendApplyList(GetFriendApplyListReq) returns(GetFriendApplyListReply);
-  // 添加黑名单
-  rpc AddBlacklist(AddBlacklistReq) returns(AddBlacklistReply);
-  // 删除黑名单
-  rpc RemoveBlacklist(RemoveBlacklistReq) returns(RemoveBlacklistReply);
+  //添加好友
+  rpc AddFriend (AddFriendReq) returns (AddFriendReply);
+  //同意或拒绝好友请求
+  rpc AddFriendResponses(AddFriendResponseReq)returns(AddFriendResponseReply);
+  //删除好友
+  rpc DeleteFriend (DeleteFriendReq) returns (DeleteFriendReply);
+  //设置好友资料
+  rpc SetFriendInfo (SetFriendInfoReq) returns (SetFriendInfoReply);
+  //好友列表
+  rpc ListFriend (ListFriendReq) returns (ListFriendReply);
+  // 根据好友id好友数据
+  rpc FriendByIds(FriendByIdsReq)returns(FriendByIdsReply);
+  //申请列表
+  rpc FriendApplyList(FriendApplyListReq)returns(FriendApplyListReply);
+  // 获取用户所有的好友id
+  rpc GetFriendIDs(GetFriendIDsReq)returns(GetFriendIDsReply);
   // 是否好友
   rpc IsFriend(IsFriendReq) returns(IsFriendReply);
+  // 获取主动发出去的好友申请列表
+  rpc GetFriendsApplyFrom(GetFriendsApplyFromReq)returns(GetFriendsApplyFromReply);
+  // 获取收到的好友申请列表
+  rpc GetFriendsApplyReceive(GetFriendsApplyReceiveReq)returns(GetFriendsApplyReceiveReply);
+  // 根据申请人和被申请人获取请求数据
+  rpc GetFriendRequestByApplicant(GetFriendRequestByApplicantReq)returns(GetFriendRequestByApplicantReply);
+  // 单方面删除用户所有好友
+  rpc DeleteAllFriends(DeleteAllFriendsReq)returns(DeleteAllFriendsReply);
+  //获取同步的好友信息
+  rpc GetSyncFriendInfo(GetSyncFriendReq)returns(GetSyncFriendReply);
+
+  // 以下是黑名单接口
+  //添加黑名单
+  rpc AddBlack(AddBlackReq)returns(AddBlackReply);
+  //移除黑名单
+  rpc RemoveBlackList(RemoveBlackListReq)returns(RemoveBlackListReply);
   // 是否黑名单
-  rpc IsInBlackList(IsInBlackListReq) returns(IsInBlackListReply);
+  rpc IsBlack(IsBlackReq) returns(IsBlackReply);
   // 获取黑名单列表
   rpc GetBlacklist(GetBlacklistReq) returns(GetBlacklistReply);
-  // 删除好友
-  rpc DeleteFriend(DeleteFriendReq) returns(DeleteFriendReply);
-  // 处理好友请求
-  rpc AddFriendResponse(AddFriendResponseReq) returns(AddFriendResponseReply);
-  // 设置好友备注
-  rpc SetFriendRemark(SetFriendRemarkReq) returns(SetFriendRemarkReply);
-  // 设置好友聊天背景图片
-  rpc SetFriendBackground(SetFriendBackgroundReq) returns (google.protobuf.Empty); // 设置好友聊天背景图片
-}
 
-/*
-    获取好友列表仅仅返回id昵称和头像
-    -------------------------------------------
- */
-message FriendListReq {
-  string userID=1; // 用户id
-  map<string,int64> changTime =2;//好友信息更新时间列表
 }
-
-message FriendListReply {
-  repeated api.common.model.v1.FriendItem items=1; // 好友列表
-}
-/*
-    获取好友信息
-    -------------------------------------------
- */
-message GetFriendsInfoReq{
-  string userId = 1; //用户ID
-  repeated string FriendUserIDs = 2; //好友id
-}
-message GetFriendInfoReply{
-  repeated api.common.model.v1.FriendInfo list = 1;
-}
-
 /*
     添加好友
     -------------------------------------------
  */
-message AddFriendReq{
-  string opUserID = 1; //操作用户ID
-  string toUserID = 2; //被添加id‘
-  string fromUserID = 3; //来源id
-  string reqMsg = 4; //请求消息
-  string remake = 5; //请求消息
-}
-message AddFriendReply{
-}
-
-
-/*
-    获取好友申请列表
-    -------------------------------------------
- */
-message GetFriendApplyListReq{
-  string userID = 1; //用户id
-  api.common.model.Pagination pagination = 2; //分页数据
-}
-message GetFriendApplyListReply{
-  int64  Total = 1; // 总数
-  repeated api.common.model.v1.FriendRequest list = 2; //列表数据
+message AddFriendReq {
+  //发起方
+  string  fromUserID = 1 [(validate.rules).string.min_len = 0];
+  //接收方
+  string  toUserID = 2 [(validate.rules).string.min_len = 0];
+  //备注
+  string remarkMsg = 3;
+  //添加好友的请求验证
+  string reqMsg = 4;
+  //来源类型(可选) 1:名片2:群3:id4:手机号5:二维码
+  int64 type = 5;
+  string userID = 6;
+  string extraMsg = 7;
 }
 
+message AddFriendReply {
 
-/*
-    添加黑名单
-    -------------------------------------------
- */
-message AddBlacklistReq{
-  string opUserID = 1; //操作用户ID
-  string toUserID = 2; //被添加id‘
-  string fromUserID = 3; //来源id
-}
-message AddBlacklistReply{
 }
 /*
-    删除黑名单
+    同意或拒绝好友请求
     -------------------------------------------
  */
-message RemoveBlacklistReq{
-  string opUserID = 1; //操作用户ID
-  string toUserID = 2; //被添加id‘
-  string fromUserID = 3; //来源id
+message AddFriendResponseReq {
+  //发起方
+  string  fromUserID = 1 [(validate.rules).string.min_len = 0];
+  //接收方
+  string  toUserID = 2 [(validate.rules).string.min_len = 0];
+  //处理消息
+  string handleMsg = 3;
+  //1为同意, 2为拒绝
+  int64 flag = 4;
+  string userID = 5;
+  string platform = 6;
 }
-message RemoveBlacklistReply{
-}
+message AddFriendResponseReply {
 
-/*
-    是否好友
-    -------------------------------------------
- */
-message IsFriendReq{
-  string opUserID = 1; //操作用户ID
-  string toUserID = 2; //被添加id‘
-  string fromUserID = 3; //来源id
-}
-message IsFriendReply{
-  bool    response = 3;
-}
-
-/*
-    是否黑名单
-    -------------------------------------------
- */
-message IsInBlackListReq{
-  string opUserID = 1; //操作用户ID
-  string toUserID = 2; //被添加id‘
-  string fromUserID = 3; //来源id
-}
-message IsInBlackListReply{
-  bool    response = 3;
-}
-/*
-    获取黑名单列表
-    -------------------------------------------
- */
-message GetBlacklistReq{
-  string opUserID = 1; //操作用户ID
-  string toUserID = 2; //被添加id‘
-  string fromUserID = 3; //来源id
-}
-message GetBlacklistReply{
-  repeated api.common.model.v1.PublicUserInfo list = 3;
 }
 /*
     删除好友
     -------------------------------------------
  */
-message DeleteFriendReq{
-  string opUserID = 1; //操作用户ID
-  string toUserID = 2; //被添加id‘
-  string fromUserID = 3; //来源id
+message DeleteFriendReq {
+  //发起方
+  string  fromUserID = 1 [(validate.rules).string.min_len = 0];
+  //接收方
+  string  toUserID = 2 [(validate.rules).string.min_len = 0];
+
+  string userID = 3;
 }
-message DeleteFriendReply{
+message DeleteFriendReply {
+
 }
 
 /*
-    处理好友请求
+    设置好友资料
     -------------------------------------------
  */
-message AddFriendResponseReq{
-  string opUserID = 1; //操作用户ID
-  string toUserID = 2; //被添加id‘
-  string fromUserID = 3; //来源id
-  int32  handleResult = 4; // 处理
-  string handleMsg = 5; //处理消息
-}
-message AddFriendResponseReply{
-}
-/*
-    设置好友备注
-    -------------------------------------------
- */
-message SetFriendRemarkReq{
-  string opUserID = 1; //操作用户ID
-  string toUserID = 2; //被添加id‘
-  string fromUserID = 3; //来源id
-  string remark = 4; //备注
-}
-message SetFriendRemarkReply{
+
+message SetFriendInfoReq {
+  //发起方
+  string  fromUserID = 1 [(validate.rules).string.min_len = 0];
+  //接收方
+  string  toUserID = 2 [(validate.rules).string.min_len = 0];
+  //好友备注
+  optional string remark = 3 [(validate.rules).string.min_len = 0];
+  optional string backgroundUrl = 4;//背景图片
+  string opUserID = 5; // 操作者id
+  optional uint32 destroyMsgStatus=6; //阅后即焚状态 0-关闭 1-开启
 }
 
-// 设置好友聊天背景图片
-message SetFriendBackgroundReq {
-  string opUserID = 1;
-  string operationID = 2;
-  string backgroundUrl = 3;
-  string friendUserId = 4; //好友id
+message SetFriendInfoReply {
+
+}
+
+/*
+    好友列表
+    -------------------------------------------
+ */
+
+message ListFriendReq {
+  optional string phone = 1; //手机号模糊匹配
+  optional string code = 2; //code模糊匹配
+  optional string userID = 3; //id精确查询
+  optional string name = 4; // 昵称或备注模糊查询
+  api.common.model.Pagination pagination = 5; //分页数据
+}
+
+message ListFriendReply {
+  int64 total = 1; //总条数
+  repeated api.common.model.v1.FriendInfo list = 2; //数据
+}
+/*
+    根据好友id好友数据
+    -------------------------------------------
+ */
+message FriendByIdsReq {
+  string userID = 1; //用户id
+  repeated string friendIds = 2; //好友id列表
+}
+
+message FriendByIdsReply {
+  repeated api.common.model.v1.FriendInfo friendsInfo = 1; //数据
+}
+/*
+    申请列表
+    -------------------------------------------
+ */
+message FriendApplyListReq {
+  string ownerID = 1; // 所属好友
+  int64 kind = 2;
+  string opUserID = 3; //操作者id
+  api.common.model.Pagination pagination = 4; //分页数据
+}
+
+message FriendApplyListReply {
+  int64 total = 1; //总条数
+  repeated api.common.model.v1.FriendRequest list = 2; //数据
+}
+/*
+    申请列表
+    -------------------------------------------
+ */
+message GetFriendIDsReq {
+  string userID = 1;
+}
+
+message GetFriendIDsReply {
+  repeated string ids = 1;
+}
+/*
+    是否好友
+    -------------------------------------------
+ */
+message IsFriendReq {
+  string ownerUserID = 1;
+  string fromUserID = 2;
+}
+
+message IsFriendReply {
+  bool isFriend = 1;
+}
+
+/*
+    获取主动发出去的好友申请列表
+    -------------------------------------------
+ */
+message GetFriendsApplyFromReq {
+  string userID = 1;
+  optional int32  hasHandled = 2; // 0:待处理1:同意2；拒绝
+  api.common.model.Pagination pagination = 3; //分页数据
+}
+message GetFriendsApplyFromReply {
+  int64 total = 1;
+  repeated api.common.model.v1.FriendRequest list = 2; //数据
+}
+/*
+    获取收到的好友申请列表
+    -------------------------------------------
+ */
+message GetFriendsApplyReceiveReq {
+  string userID = 1;
+  optional int32  hasHandled = 2; // 0:待处理1:同意2；拒绝
+  api.common.model.Pagination pagination = 3; //分页数据
+}
+message GetFriendsApplyReceiveReply {
+  int64 total = 1;
+  repeated api.common.model.v1.FriendRequest list = 2; //数据
+}
+/*
+    根据申请人和被申请人获取请求数据
+    -------------------------------------------
+ */
+message GetFriendRequestByApplicantReq {
+  string fromUserID = 1; //发起者
+  string toUserID = 2; //接受者
+}
+
+message GetFriendRequestByApplicantReply {
+  api.common.model.v1.FriendRequest friendRequest = 1;//好友请求
+}
+/*
+  单方面删除所有好友（注销时用）
+ */
+message DeleteAllFriendsReq {
+  string userID = 1; //用户id
+}
+message DeleteAllFriendsReply {
+
+}
+/*
+  获取同步的好友信息
+ */
+message GetSyncFriendReq {
+  string userID = 1;
+  api.common.model.Pagination pagination = 3; //分页数据
+}
+
+message GetSyncFriendReply {
+  int64 total = 1;
+  repeated api.common.model.v1.FriendBaseInfo list = 2; //数据
+}
+
+/*
+  加入黑名单
+ */
+message AddBlackReq {
+  string ownerUserID = 1; //用户ID
+  string blackUserID = 2; //加入黑名单的用户ID
+}
+
+message AddBlackReply {
+
+}
+/*
+  移除黑名单
+ */
+message RemoveBlackListReq {
+  string fromUserID = 1;
+  string toUserID = 2;
+}
+
+message RemoveBlackListReply {
+
+}
+/*
+  判断是否在在黑名单中
+ */
+message IsBlackReq {
+  string ownerUserID = 1;
+  string toUserID = 2;
+}
+
+message IsBlackReply {
+  bool isBlack = 1;
+}
+
+message GetBlacklistReq {
+  string fromUserID = 1;
+  string userID = 2;
+  api.common.model.Pagination pagination = 3; //分页数据
+}
+
+message GetBlacklistReply {
+  int64 total = 1;
+  repeated api.common.model.v1.PublicUserInfo data = 2;
 }

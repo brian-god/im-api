@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package api.common.model.v1;
+
+option go_package = "github.com/brian-god/im-api/api/common/model/v1;v1";
+option java_multiple_files = true;
+option java_package = "api.common.model.v1";
+
+// 用户公开信息
+message PublicUserInfo{
+	string userID = 1;
+	string nickname = 2;
+	string faceURL = 3;
+	int32 gender = 4;
+	string ex = 5;
+}
