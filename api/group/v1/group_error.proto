@@ -11,7 +11,6 @@ enum GroupErrorReason {
   // 设置缺省错误码
   option (errors.default_code) = 500;
 
-
   // 获取群信息失败
   GET_GROUP_INFO_FAIL = 0 [(errors.code) = 510];
   // 群成员数量不应超过最大限制
@@ -68,13 +67,10 @@ enum GroupErrorReason {
   THE_APPLICATION_HAS_BEEN_INITIATED_DO_NOT_REPEAT = 26 [(errors.code) = 519];
   // 获取最大未处理的加群请求失败
   GET_UNTREATED_GROUP_APPLICATION_LIST_FAIL=27 [(errors.code) = 520];
-
-  // 更新错误
-  UPDATE_FAIL = 28 [(errors.code) = 521];
-  // 查询错误
-  QUERY_FAIL = 29 [(errors.code) = 522];
-
-  // 群成员人数上限
-  GROUP_MAX_MEMBER_LIMIT_ERROR = 30 [(errors.code) = 523];
-
+  // 该群暂未公开
+  GROUP_IS_NOT_OPEN=28 [(errors.code) = 400];
+  // 该群暂未公开
+  YOU_ARE_ALREADY_IN_THE_GROUP=29 [(errors.code) = 400];
+  // 群不存在
+  GROUP_IS_NOT_FOND=30 [(errors.code) = 400];
 }
