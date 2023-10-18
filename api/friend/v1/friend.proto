@@ -7,7 +7,7 @@ option java_multiple_files = true;
 option java_package = "api.friend.v1";
 import "api/common/model/v1/friend.proto";
 import "api/common/model/v1/user.proto";
-import "api/common/model/common.proto";
+import "api/common/page/page.proto";
 
 service Friend {
   //添加好友
@@ -138,7 +138,7 @@ message ListFriendReq {
   optional string code = 2; //code模糊匹配
   optional string userID = 3; //id精确查询
   optional string name = 4; // 昵称或备注模糊查询
-  api.common.model.Pagination pagination = 5; //分页数据
+  api.common.page.Pagination pagination = 5; //分页数据
 }
 
 message ListFriendReply {
@@ -165,7 +165,7 @@ message FriendApplyListReq {
   string ownerID = 1; // 所属好友
   int64 kind = 2;
   string opUserID = 3; //操作者id
-  api.common.model.Pagination pagination = 4; //分页数据
+  api.common.page.Pagination pagination = 4; //分页数据
 }
 
 message FriendApplyListReply {
@@ -203,7 +203,7 @@ message IsFriendReply {
 message GetFriendsApplyFromReq {
   string userID = 1;
   optional int32  hasHandled = 2; // 0:待处理1:同意2；拒绝
-  api.common.model.Pagination pagination = 3; //分页数据
+  api.common.page.Pagination pagination = 3; //分页数据
 }
 message GetFriendsApplyFromReply {
   int64 total = 1;
@@ -216,7 +216,7 @@ message GetFriendsApplyFromReply {
 message GetFriendsApplyReceiveReq {
   string userID = 1;
   optional int32  hasHandled = 2; // 0:待处理1:同意2；拒绝
-  api.common.model.Pagination pagination = 3; //分页数据
+  api.common.page.Pagination pagination = 3; //分页数据
 }
 message GetFriendsApplyReceiveReply {
   int64 total = 1;
@@ -248,7 +248,7 @@ message DeleteAllFriendsReply {
  */
 message GetSyncFriendReq {
   string userID = 1;
-  api.common.model.Pagination pagination = 3; //分页数据
+  api.common.page.Pagination pagination = 3; //分页数据
 }
 
 message GetSyncFriendReply {
@@ -293,7 +293,7 @@ message IsBlackReply {
 message GetBlacklistReq {
   string fromUserID = 1;
   string userID = 2;
-  api.common.model.Pagination pagination = 3; //分页数据
+  api.common.page.Pagination pagination = 3; //分页数据
 }
 
 message GetBlacklistReply {

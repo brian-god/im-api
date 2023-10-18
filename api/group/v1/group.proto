@@ -6,7 +6,7 @@ option java_multiple_files = true;
 option java_package = "api.group.v1";
 
 import "api/common/model/v1/group.proto";
-import "api/common/model/common.proto";
+import "api/common/page/page.proto";
 
 
 enum GroupSwitchOption{
@@ -236,7 +236,7 @@ message GetJoinedGroupInfoReply {
  */
 message GetJoinedGroupListReq {
     string userID = 1;
-    api.common.model.Pagination pagination = 2; //分页数据
+    api.common.page.Pagination pagination = 2; //分页数据
 }
 message GetJoinedGroupListReply {
     int64 total = 1;
@@ -248,7 +248,7 @@ message GetJoinedGroupListReply {
 message FindGroupListReq {
     optional string groupID = 1;
     optional string name = 2;
-    api.common.model.Pagination pagination = 3; //分页数据
+    api.common.page.Pagination pagination = 3; //分页数据
 }
 
 message FindGroupInfoReply {
@@ -261,7 +261,7 @@ message FindGroupInfoReply {
 message GetGroupInfoCacheReq {
     optional string groupID = 1;
     optional string name = 2;
-    api.common.model.Pagination pagination = 3; //分页数据
+    api.common.page.Pagination pagination = 3; //分页数据
 }
 
 message GetGroupInfoCacheReply {
@@ -284,7 +284,7 @@ message SearchGroupInfoReply {
  */
 message GetSyncGroupReq {
     string userID = 1;
-    api.common.model.Pagination pagination = 3; //分页数据
+    api.common.page.Pagination pagination = 3; //分页数据
 }
 
 message GetSyncGroupReply {
@@ -364,7 +364,7 @@ message SearchJoinGroupApplicationReq {
     optional string userId = 3; // 用户id
     optional bool isAdm = 4;//是否管理
     optional bool isGroupOwner = 5;//是否群主
-    api.common.model.Pagination pagination = 6; //分页数据
+    api.common.page.Pagination pagination = 6; //分页数据
 }
 message  SearchJoinGroupApplicationReply {
     int64 total = 1;
@@ -376,7 +376,7 @@ message  SearchJoinGroupApplicationReply {
 message GetGroupApplicationListReq {
     string userID = 1;
     string groupID = 2;
-    api.common.model.Pagination pagination = 3; //分页数据
+    api.common.page.Pagination pagination = 3; //分页数据
 }
 message  GetGroupApplicationListReply {
     int64 total = 1;
@@ -389,7 +389,7 @@ message  GetGroupApplicationListReply {
 message GetUntreatedGroupApplicationListReq {
     string userID = 1;
     string groupID = 2;
-    api.common.model.Pagination pagination = 3; //分页数据
+    api.common.page.Pagination pagination = 3; //分页数据
 }
 
 message GetUntreatedGroupApplicationListReply {
@@ -402,7 +402,7 @@ message GetUntreatedGroupApplicationListReply {
  */
 message GetUserJoinGroupApplicationListReq {
     string userID = 1;
-    api.common.model.Pagination pagination = 2; //分页数据
+    api.common.page.Pagination pagination = 2; //分页数据
 }
 
 message GetUserJoinGroupApplicationListReply {
@@ -508,7 +508,7 @@ message GetMemberListReq {
     string groupID = 1; //群id
     string nickname = 2; // 成员昵称
     string userID = 3; //用户id
-    api.common.model.Pagination pagination = 4; //分页数据
+    api.common.page.Pagination pagination = 4; //分页数据
 }
 message GetMemberListReply {
     int64 total = 1;
@@ -532,7 +532,7 @@ message GetMemberByIdsReply {
 message GroupMemberFilterReq {
     string groupID = 1; // 群成员
     int32 filter = 2; //过滤条件 1-所有成员;2-群主；3-管理员；4-普通用户；5管理和普通用户；6-群主和管理员
-    api.common.model.Pagination pagination = 3; //分页数据
+    api.common.page.Pagination pagination = 3; //分页数据
 }
 message  GroupMemberFilterReply {
     int64 total = 1;
