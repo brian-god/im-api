@@ -5,11 +5,9 @@ package api.friend.v1;
 option go_package = "github.com/brian-god/im-api/api/friend/v1;v1";
 option java_multiple_files = true;
 option java_package = "api.friend.v1";
-import "validate/validate.proto";
 import "common/model/v1/friend.proto";
 import "common/model/v1/user.proto";
 import "common/model/common.proto";
-import "google/protobuf/empty.proto";
 
 service Friend {
   //添加好友
@@ -58,9 +56,9 @@ service Friend {
  */
 message AddFriendReq {
   //发起方
-  string  fromUserID = 1 [(validate.rules).string.min_len = 0];
+  string  fromUserID = 1;
   //接收方
-  string  toUserID = 2 [(validate.rules).string.min_len = 0];
+  string  toUserID = 2;
   //备注
   string remarkMsg = 3;
   //添加好友的请求验证
@@ -80,9 +78,9 @@ message AddFriendReply {
  */
 message AddFriendResponseReq {
   //发起方
-  string  fromUserID = 1 [(validate.rules).string.min_len = 0];
+  string  fromUserID = 1;
   //接收方
-  string  toUserID = 2 [(validate.rules).string.min_len = 0];
+  string  toUserID = 2;
   //处理消息
   string handleMsg = 3;
   //1为同意, 2为拒绝
@@ -99,9 +97,9 @@ message AddFriendResponseReply {
  */
 message DeleteFriendReq {
   //发起方
-  string  fromUserID = 1 [(validate.rules).string.min_len = 0];
+  string  fromUserID = 1;
   //接收方
-  string  toUserID = 2 [(validate.rules).string.min_len = 0];
+  string  toUserID = 2;
 
   string userID = 3;
 }
@@ -116,11 +114,11 @@ message DeleteFriendReply {
 
 message SetFriendInfoReq {
   //发起方
-  string  fromUserID = 1 [(validate.rules).string.min_len = 0];
+  string  fromUserID = 1;
   //接收方
-  string  toUserID = 2 [(validate.rules).string.min_len = 0];
+  string  toUserID = 2;
   //好友备注
-  optional string remark = 3 [(validate.rules).string.min_len = 0];
+  optional string remark = 3;
   optional string backgroundUrl = 4;//背景图片
   string opUserID = 5; // 操作者id
   optional uint32 destroyMsgStatus=6; //阅后即焚状态 0-关闭 1-开启
