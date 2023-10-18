@@ -5,9 +5,9 @@ package api.friend.v1;
 option go_package = "github.com/brian-god/im-api/api/friend/v1;v1";
 option java_multiple_files = true;
 option java_package = "api.friend.v1";
-import "common/model/v1/friend.proto";
-import "common/model/v1/user.proto";
-import "common/model/common.proto";
+import "api/common/model/v1/friend.proto";
+import "api/common/model/v1/user.proto";
+import "api/common/model/common.proto";
 
 service Friend {
   //添加好友

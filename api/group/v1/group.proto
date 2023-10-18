@@ -5,8 +5,8 @@ option go_package = "github.com/brian-god/im-api/api/group/v1;v1";
 option java_multiple_files = true;
 option java_package = "api.group.v1";
 
-import "common/model/v1/group.proto";
-import "common/model/common.proto";
+import "api/common/model/v1/group.proto";
+import "api/common/model/common.proto";
 
 
 enum GroupSwitchOption{
